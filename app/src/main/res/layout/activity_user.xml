@@ -32,8 +32,8 @@
 
     <TextView
         android:id="@+id/txtPointsUser"
-        android:layout_width="148dp"
-        android:layout_height="22dp"
+        android:layout_width="147dp"
+        android:layout_height="29dp"
         android:text="Puntos: "
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20sp"

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectofinaldam1.R;
+import com.example.proyectofinaldam1.models.DataBaseJSON;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,15 +26,13 @@ public class LoggingActivity extends AppCompatActivity implements View.OnClickLi
     private EditText etGMAIL;
     private EditText etPW;
     private Button btnLog;
-    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logging);
 
         getWindow().setStatusBarColor(Color.parseColor("#000000"));
-
-        mAuth = FirebaseAuth.getInstance();
 
         tvToRegister = (TextView) findViewById(R.id.txtToRegister);
         etGMAIL = (EditText) findViewById(R.id.edtgmailLI);
@@ -42,6 +41,7 @@ public class LoggingActivity extends AppCompatActivity implements View.OnClickLi
 
         tvToRegister.setOnClickListener(this);
         btnLog.setOnClickListener(this);
+
     }
 
     @Override
@@ -59,15 +59,15 @@ public class LoggingActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
     private void initSesion(String email,String password){
-        mAuth.signInWithEmailAndPassword(email, password)
+        DataBaseJSON.fbAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("funciona", "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            MainActivity.userFirebase = user;
+                            FirebaseUser user = DataBaseJSON.fbAuth.getCurrentUser();
+                            DataBaseJSON.userFirebase = user;
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Nop", "signInWithEmail:failure", task.getException());

@@ -7,7 +7,7 @@
     tools:context=".controlers.RankingListActivity">
 
     <Button
-        android:id="@+id/btnSearch"
+        android:id="@+id/btnSearchRnk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="search"
@@ -19,14 +19,14 @@
         app:layout_constraintVertical_bias="0.01999998" />
 
     <EditText
-        android:id="@+id/edNameUserSearch"
+        android:id="@+id/edtNameUserSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="12"
         android:inputType="text"
         android:text="Usuario"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSearch"
+        app:layout_constraintEnd_toStartOf="@+id/btnSearchRnk"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,5 +39,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edNameUserSearch" />
+        app:layout_constraintTop_toBottomOf="@+id/edtNameUserSearch" />
 </androidx.constraintlayout.widget.ConstraintLayout>

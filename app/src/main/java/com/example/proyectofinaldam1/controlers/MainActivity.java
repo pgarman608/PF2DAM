@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.proyectofinaldam1.R;
+import com.example.proyectofinaldam1.models.DataBaseJSON;
+import com.example.proyectofinaldam1.models.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,10 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button logBtn;
     private Button tnrBtn;
     private Button rnkBtn;
-    private FirebaseAuth fAuth;
-    public static FirebaseUser userFirebase;
-
     private androidx.appcompat.view.ActionMode mLog;
+
+    public static Usuario usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,23 +49,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onLongClick(View v) {
                 boolean active = false;
-                if (mLog == null && userFirebase != null){
+                if (mLog == null && DataBaseJSON.userFirebase != null){
                     mLog = startSupportActionMode(mLogCallback);
                     active = true;
                 }
                 return active;
             }
         });
-        fAuth = FirebaseAuth.getInstance();
+        DataBaseJSON.fbAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = fAuth.getCurrentUser();
+        FirebaseUser currentUser = DataBaseJSON.fbAuth.getCurrentUser();
         if (currentUser != null){
-            userFirebase = currentUser;
-            logBtn.setText(userFirebase.getDisplayName().substring(0,3));
+            DataBaseJSON.userFirebase = currentUser;
+            logBtn.setText(DataBaseJSON.userFirebase.getDisplayName().substring(0,3));
             Log.i("Cargar user", "onStart: No cargar pero funciona" + currentUser.getDisplayName());
         }else{
             registerForContextMenu(logBtn);
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intentHome = null;
         switch (view.getId()){
             case R.id.btnLog:
-                if (userFirebase == null){
+                if (DataBaseJSON.userFirebase == null){
                     intentHome = new Intent(MainActivity.this, LoggingActivity.class);
                 }else{
                     intentHome = new Intent(MainActivity.this, UserActivity.class);
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnTnr:
-                intentHome = new Intent(MainActivity.this, TournamentActivity.class);
+                intentHome = new Intent(MainActivity.this, TournamentListActivity.class);
                 startActivity(intentHome);
                 break;
 
@@ -102,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(userFirebase != null){
-            logBtn.setText(userFirebase.getDisplayName().substring(0,3));
+        if(DataBaseJSON.userFirebase != null){
+            logBtn.setText(DataBaseJSON.userFirebase.getDisplayName().substring(0,3));
         }
     }
 
@@ -123,8 +124,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int itemId = item.getItemId();
             switch(itemId){
                 case R.id.close_user:
-                    userFirebase = null;
-                    fAuth.signOut();
+                    DataBaseJSON.userFirebase = null;
+                    DataBaseJSON.fbAuth.signOut();
                     logBtn.setText("LOG");
                     break;
             }

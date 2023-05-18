@@ -7,7 +7,7 @@
     tools:context=".controlers.RankingListRowActivity">
 
     <ImageView
-        android:id="@+id/ivSeeImg"
+        android:id="@+id/ivSeeRnk"
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:layout_marginTop="6dp"
@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toEndOf="@+id/ivSeeImg"
+        app:layout_constraintStart_toEndOf="@+id/ivSeeRnk"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25" />
 
@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toEndOf="@+id/ivSeeImg"
+        app:layout_constraintStart_toEndOf="@+id/ivSeeRnk"
         app:layout_constraintTop_toBottomOf="@+id/txtSeeNameRnk"
         app:layout_constraintVertical_bias="0.55" />
 
@@ -52,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toEndOf="@+id/ivSeeImg"
+        app:layout_constraintStart_toEndOf="@+id/ivSeeRnk"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

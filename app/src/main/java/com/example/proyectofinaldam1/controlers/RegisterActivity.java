@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectofinaldam1.R;
+import com.example.proyectofinaldam1.models.DataBaseJSON;
+import com.example.proyectofinaldam1.models.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -113,25 +115,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // El usuario se registró exitosamente
-                                        MainActivity.userFirebase = FirebaseAuth.getInstance().getCurrentUser();
-                                        if (MainActivity.userFirebase != null) {
+                                        DataBaseJSON.userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+                                        if (DataBaseJSON.userFirebase != null) {
                                             // Agregar el nick ingresado por el usuario a los datos de usuario en Firebase
                                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                     .setDisplayName(nick)
                                                     .build();
-                                            MainActivity.userFirebase.updateProfile(profileUpdates);
+                                            DataBaseJSON.userFirebase.updateProfile(profileUpdates);
                                         }
                                         Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
                                         FirebaseDatabase db = FirebaseDatabase.getInstance();
                                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                                         // Create a new user with authentication_id and smash_points
-                                        Map<String, Object> user = new HashMap<>();
-                                        user.put("authentication_id", userId);
-                                        user.put("nick",nick);
-                                        user.put("smash_points", 100);
-                                        user.put("usuarios_jugados", new HashMap<String, Integer>());
-                                        user.put("torneos_jugados", new ArrayList<String>());
+                                        Usuario user = new Usuario(userId,nick,100);
 
                                         // Add the user to the "usuarios" collection with the user's ID as the document ID
                                         db.getReference("usuarios").child(userId)

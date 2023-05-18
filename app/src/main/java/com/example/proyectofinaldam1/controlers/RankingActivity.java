@@ -24,7 +24,7 @@ public class RankingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_ranking);
 
         getWindow().setStatusBarColor(Color.parseColor("#000000"));
-        getActionBar().setTitle("Selector de Tier");
+
 
         vTierC = (View) findViewById(R.id.vTierC);
         vTierB = (View) findViewById(R.id.vTierB);
@@ -42,16 +42,16 @@ public class RankingActivity extends AppCompatActivity implements View.OnClickLi
         Intent intentRnk = new Intent(RankingActivity.this,RankingListActivity.class);
         switch (v.getId()){
             case R.id.vTierC:
-                intentRnk.putExtra("Tier",1);
+                intentRnk.putExtra("Tier",300);
                 break;
             case R.id.vTierB:
-                intentRnk.putExtra("Tier",2);
+                intentRnk.putExtra("Tier",700);
                 break;
             case R.id.vTierA:
-                intentRnk.putExtra("Tier",3);
+                intentRnk.putExtra("Tier",1000);
                 break;
             case R.id.vTierS:
-                intentRnk.putExtra("Tier",4);
+                intentRnk.putExtra("Tier",2000);
                 break;
         }
         startActivity(intentRnk);
