@@ -1,5 +1,6 @@
 package com.example.proyectofinaldam1.adapters;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,6 @@ public class RaRanking extends RecyclerView.Adapter<RaRanking.RecyclerHolder> {
 
     private List<Usuario> users;
 
-    private View.OnClickListener onClickListener;
     public RaRanking(List<Usuario> users) {
         this.users = users;
     }
@@ -49,10 +49,10 @@ public class RaRanking extends RecyclerView.Adapter<RaRanking.RecyclerHolder> {
         notifyDataSetChanged();
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
         Usuario usuario = users.get(position);
-        Log.d("Onview", "onBindViewHolder: " + usuario.getUid());
         holder.tvNick.setText(usuario.getNick());
         holder.tvPoints.setText("Puntos: " + usuario.getPoints());
         holder.btnSeeUser.setOnClickListener(new View.OnClickListener() {

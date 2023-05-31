@@ -109,49 +109,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (TextUtils.isEmpty(nick)) {
                         edNick.setError("Ingrese un nick para su cuenta");
                     }else{
-                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // El usuario se registró exitosamente
-                                        DataBaseJSON.userFirebase = FirebaseAuth.getInstance().getCurrentUser();
-                                        if (DataBaseJSON.userFirebase != null) {
-                                            // Agregar el nick ingresado por el usuario a los datos de usuario en Firebase
-                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                    .setDisplayName(nick)
-                                                    .build();
-                                            DataBaseJSON.userFirebase.updateProfile(profileUpdates);
-                                        }
-                                        Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
-                                        FirebaseDatabase db = FirebaseDatabase.getInstance();
-                                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                                        // Create a new user with authentication_id and smash_points
-                                        Usuario user = new Usuario(userId,nick,100);
-
-                                        // Add the user to the "usuarios" collection with the user's ID as the document ID
-                                        db.getReference("usuarios").child(userId)
-                                                .setValue(user)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("funciona basededatos", "User created successfully");
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.e("funciona basededatos", "Error creating user: " + e.getMessage());
-                                                    }
-                                                });
-                                        // Puedes iniciar sesión con el nuevo usuario aquí si lo deseas
-                                    } else {
-                                        // Si se produjo un error al registrar el usuario, muestra un mensaje de error
-                                        Toast.makeText(getApplicationContext(), "Error al registrar el usuario", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                        int sol = DataBaseJSON.createUser(nick,password,email);
 
                     }
                 }

@@ -33,15 +33,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrns"
-        android:layout_width="410dp"
-        android:layout_height="850dp"
-        android:layout_marginTop="6dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNameSearchTrns"
-        app:layout_constraintVertical_bias="0.41" />
+        app:layout_constraintTop_toBottomOf="@+id/etNameSearchTrns" />
 
     <Button
         android:id="@+id/btnAddTrn"

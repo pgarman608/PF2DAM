@@ -61,9 +61,10 @@ public class UserActivity extends AppCompatActivity {
                     }
                 }
                 @Override
-                public void onUsersObtendio(List<Usuario> users) {
+                public void onUsersObtenido(List<Usuario> users) {}
 
-                }
+                @Override
+                public void onTrnsObtenido(List<Torneo> torneos) {}
             });
         }else{
             Usuario usr = gson.fromJson(strIntent,Usuario.class);

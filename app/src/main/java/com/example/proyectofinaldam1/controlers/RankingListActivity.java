@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.example.proyectofinaldam1.R;
 import com.example.proyectofinaldam1.adapters.RaRanking;
 import com.example.proyectofinaldam1.models.DataBaseJSON;
+import com.example.proyectofinaldam1.models.Torneo;
 import com.example.proyectofinaldam1.models.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -72,8 +73,13 @@ public class RankingListActivity extends AppCompatActivity implements DataBaseJS
     }
 
     @Override
-    public void onUsersObtendio(List<Usuario> usuarios) {
+    public void onUsersObtenido(List<Usuario> usuarios) {
         users = usuarios;
         raRanking.setUsers(users);
+    }
+
+    @Override
+    public void onTrnsObtenido(List<Torneo> torneos) {
+
     }
 }

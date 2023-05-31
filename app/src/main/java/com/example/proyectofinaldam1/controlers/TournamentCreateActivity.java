@@ -39,15 +39,28 @@ public class TournamentCreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String strTitle = etTitle.getText().toString();
-                String strInfo = etTitle.getText().toString();
-                String strMaxPlayer = etTitle.getText().toString();
-                String strPrecio = etTitle.getText().toString();
+                String strInfo = etInfo.getText().toString();
+                String strMaxPlayer = etMaxPlayer.getText().toString();
+                String strPrecio = etPrecio.getText().toString();
 
                 if (!TextUtils.isEmpty(strTitle)){
                     if (!TextUtils.isEmpty(strInfo)){
                         if (!TextUtils.isEmpty(strMaxPlayer)){
                             if (!TextUtils.isEmpty(strPrecio)){
-                                Torneo torneo = new Torneo("01202", DataBaseJSON.userFirebase.getUid(),strTitle,strInfo,Integer.parseInt(strMaxPlayer),Integer.parseInt(strPrecio));
+                                Torneo torneo = new Torneo("asd",DataBaseJSON.fbAuth.getUid(),strTitle,strInfo,Integer.parseInt(strMaxPlayer),Integer.parseInt(strPrecio));
+                                int funciona = DataBaseJSON.createTournament(torneo);
+                                if (funciona == -1){
+                                    createToast("No funciona");
+                                }else{
+                                    if(funciona == 1){
+                                        createToast("Funciona");
+                                        onBackPressed();
+                                    }else{
+                                        if (funciona == -2) {
+                                            createToast("No funciona da excepcion");
+                                        }
+                                    }
+                                }
                             }else{
                                 createToast("El torneo necesita un precio por entrada");
                             }
