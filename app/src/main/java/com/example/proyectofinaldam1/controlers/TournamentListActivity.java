@@ -67,11 +67,15 @@ public class TournamentListActivity extends AppCompatActivity implements DataBas
         raTournaments.setOnItemClickListener(new RaTournaments.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Torneo posTrn = tournaments.get(position);
-                String strIntent = gson.toJson(posTrn);
-                Intent intentToTrn = new Intent(TournamentListActivity.this, TournamentActivity.class);
-                intentToTrn.putExtra("activity_anterior",strIntent);
-                startActivity(intentToTrn);
+                try {
+                    Torneo posTrn = tournaments.get(position);
+                    String strIntent = gson.toJson(posTrn);
+                    Intent intentToTrn = new Intent(TournamentListActivity.this, TournamentActivity.class);
+                    intentToTrn.putExtra("activity_anterior",strIntent);
+                    startActivity(intentToTrn);
+                }catch (Exception ex) {
+                    Log.e("to trn", "onItemClick: " + ex.getMessage());
+                }
             }
         });
         DataBaseJSON.GetTrnsTask getTournaments = new DataBaseJSON.GetTrnsTask(this, this);
