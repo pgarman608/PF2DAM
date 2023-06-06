@@ -97,7 +97,7 @@ public class TournamentActivity extends AppCompatActivity implements DataBaseJSO
             btnSets.setEnabled(false);
         }
         //Si los sets no están creados y somos el creador el torneo mostraremos el btn de start
-        if (DataBaseJSON.userFirebase == null || torneo.getUidCreator() == DataBaseJSON.userFirebase.getUid() || torneo.getSets() != null){
+        if (DataBaseJSON.userFirebase == null ||!DataBaseJSON.userFirebase.getUid().equals(""+torneo.getUidCreator())){
             btnStar.setVisibility(View.INVISIBLE);
         }
         // Obtener la lista de usuarios del torneo desde la base de datos

@@ -73,6 +73,7 @@ public class SetActivity extends AppCompatActivity {
     private TextView tvPointJP1;
     private TextView tvPointJP2;
     private TextView tvActualizar;
+    private TextView tvRnd;
     private View vJP1;
     private View vJP2;
     private List<Integer> imgIcons;
@@ -83,7 +84,6 @@ public class SetActivity extends AppCompatActivity {
     private AnimatedCharapter animeChrJP1;
     private AnimatedCharapter animeChrJP2;
     private static final int REQUEST_CODE = 1;
-    private int usuario;
     private Set setGame;
     private ValueEventListener valueEventListenerInteger;
     private int pos;
@@ -123,6 +123,7 @@ public class SetActivity extends AppCompatActivity {
         this.tvJP2 = (TextView) findViewById(R.id.tvSetJP2);
         this.tvPointJP1 = (TextView) findViewById(R.id.tvPointsJP1);
         this.tvPointJP2 = (TextView) findViewById(R.id.tvPointJP2);
+        this.tvRnd = (TextView) findViewById(R.id.tvRnd);
 
         this.tvActualizar = (TextView)  findViewById(R.id.tvActualizar);
         this.vJP1 = (View) findViewById(R.id.vJP1);
@@ -139,7 +140,7 @@ public class SetActivity extends AppCompatActivity {
         // Crear la lista de iconos en el spinner
         createList();
         imgTempChrJP1 = 0;
-        pos = 0;
+        pos = calcPos();
         playing = 0;
         // Obtener datos de la actividad anterior
         Gson gson = new Gson();
@@ -150,17 +151,16 @@ public class SetActivity extends AppCompatActivity {
         tvJP2.setText(setGame.getUid_j2().getNick());
         // Determinar si el usuario actual es JP1 o JP2 y establecer los indicadores
         if (DataBaseJSON.userFirebase.getUid().equals(setGame.getUid_j1().getUid())){
-            usuario = 1;
             setGame.setJp1join(1);
         }else{
             setGame.setJp2join(1);
-            usuario = 2;
         }
         if (setGame.getGames() != null){
             setPoints();
         }
         DataBaseJSON.setSet(setGame);
         DatabaseReference newR = DataBaseJSON.dbFirebase.getReference("Sets").child(""+setGame.getUid());
+        tvRnd.setText("Ronda :" + setGame.getRound());
         if (setGame.getStages() == null){
             setGame.setStages(new ArrayList<>());
             setGame.setStages(0,0);
@@ -233,7 +233,9 @@ public class SetActivity extends AppCompatActivity {
                                         btnWJP2.setEnabled(false);
                                         setPoints();
                                         pos++;
-                                        playing = 2;
+                                        if (animeChrJP2.getSeccion() != 0){
+                                            playing = 2;
+                                        }
                                         spIcon.setVisibility(View.VISIBLE);
                                         findViewById(R.id.ttlChr).setVisibility(View.VISIBLE);
                                         spIcon.setEnabled(true);
@@ -246,7 +248,9 @@ public class SetActivity extends AppCompatActivity {
                                             btnWJP2.setEnabled(false);
                                             setPoints();
                                             pos++;
-                                            playing = 3;
+                                            if (animeChrJP2.getSeccion() != 0){
+                                                playing = 3;
+                                            }
                                             spIcon.setEnabled(true);
                                             spIcon.setVisibility(View.VISIBLE);
                                             findViewById(R.id.ttlChr).setVisibility(View.VISIBLE);
@@ -318,8 +322,6 @@ public class SetActivity extends AppCompatActivity {
                 spIcon.setEnabled(true);
                 spIcon.setVisibility(View.VISIBLE);
                 findViewById(R.id.ttlChr).setVisibility(View.VISIBLE);
-                animeChrJP1.moveCenterToLeft(SetActivity.this,imgJP1,imgChrJP1,tvJP1);
-                animeChrJP2.moveCenterToRight(SetActivity.this,imgJP2,imgChrJP2,tvJP2);
             }
         });
         //Diremos que el jugador 2 a ganado el game
@@ -342,8 +344,6 @@ public class SetActivity extends AppCompatActivity {
                 spIcon.setVisibility(View.VISIBLE);
                 findViewById(R.id.ttlChr).setVisibility(View.VISIBLE);
                 spIcon.setEnabled(true);
-                animeChrJP1.moveCenterToLeft(SetActivity.this,imgJP1,imgChrJP1,tvJP1);
-                animeChrJP2.moveCenterToRight(SetActivity.this,imgJP2,imgChrJP2,tvJP2);
             }
         });
         //Cargar los iconos en el spinner
@@ -486,6 +486,9 @@ public class SetActivity extends AppCompatActivity {
                                 timedeadJP1 = 0;
                                 playing = 0;
                                 animeChrJP2.setPostStatus(0);
+                                animeChrJP1.moveCenterToLeft(SetActivity.this,imgJP1,imgChrJP1,tvJP1);
+                                animeChrJP2.moveCenterToRight(SetActivity.this,imgJP2,imgChrJP2,tvJP2);
+
                             }
                             if (setGame.getEnd() != 1){
                                 handlerJP1.postDelayed(this, 150);
@@ -551,6 +554,8 @@ public class SetActivity extends AppCompatActivity {
                                 timedeadJP2 = 0;
                                 playing = 0;
                                 animeChrJP1.setPostStatus(0);
+                                animeChrJP1.moveCenterToLeft(SetActivity.this,imgJP1,imgChrJP1,tvJP1);
+                                animeChrJP2.moveCenterToRight(SetActivity.this,imgJP2,imgChrJP2,tvJP2);
                             }
                             if (setGame.getEnd() != 1){
                                 handlerJP2.postDelayed(this, 150);
@@ -594,12 +599,12 @@ public class SetActivity extends AppCompatActivity {
         int point2 = 0;
         for (int i = 0; i < setGame.getGames().size(); i++) {
             if (setGame.getGames().get(i) == 1){
-                point1++;
-                pbJP2.setProgress(100 - 33*point1);
+                point2++;
+                setPrb(1,(33*point2),pbJP1.getProgress());
             }else{
                 if (setGame.getGames().get(i) == 2){
-                    point2++;
-                    pbJP1.setProgress(100 - 33*point1);
+                    point1++;
+                    setPrb(2,(33*point1),pbJP2.getProgress());
                 }
             }
         }
@@ -694,5 +699,51 @@ public class SetActivity extends AppCompatActivity {
         findViewById(R.id.ttlScene).setVisibility(View.INVISIBLE);
         findViewById(R.id.ttlChr).setVisibility(View.INVISIBLE);
         spIcon.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * Calcularemos el set donde estan los jugadores
+     * @return
+     */
+    private int calcPos(){
+        int aux = 0;
+        if (setGame != null){
+            for (int i = 0; i < setGame.getGames().size() ; i++) {
+                if (setGame.getGames().get(i) == 0){
+                    setGame.getGames().remove(i);
+                    i--;
+                }
+            }
+            aux = setGame.getGames().size()-1;
+        }
+        return aux;
+    }
+    private Handler handlerProgress;
+    /**
+     * En este metodo disminuiremos el progreso de la progress bar de la vista
+     * @param pb
+     * @param delpnt
+     * @param start
+     */
+    private void setPrb(int pb,int delpnt, int start){
+        int aux = 0;
+        handlerProgress = new Handler();
+        Runnable runPogress = new Runnable() {
+            @Override
+            public void run() {
+                if (pb == 1){
+                    pbJP1.setProgress(pbJP1.getProgress()-1);
+                    if (pbJP1.getProgress() > start - delpnt){
+                        handlerProgress.postDelayed(this,100);
+                    }
+                }else{
+                    pbJP2.setProgress(pbJP2.getProgress()-1);
+                    if (pbJP2.getProgress() > start - delpnt){
+                        handlerProgress.postDelayed(this,100);
+                    }
+                }
+            }
+        };
+        handlerProgress.postDelayed(runPogress,150);
     }
 }

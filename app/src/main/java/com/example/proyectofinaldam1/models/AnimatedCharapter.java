@@ -32,9 +32,13 @@ public class AnimatedCharapter {
         this.indice = 0;
         this.postStatus = 0;
         this.status = 0;
+        this.seccion = 0;
     }
     public int getStatus() {
         return status;
+    }
+    public int getSeccion(){
+        return  this.seccion;
     }
 
     public void setStatus(int status) {
@@ -163,6 +167,7 @@ public class AnimatedCharapter {
             @Override
             public void onAnimationEnd(Animation animation) {
                 postStatus = 0;
+                seccion++;
             }
 
             @Override
@@ -174,7 +179,7 @@ public class AnimatedCharapter {
         tvJP1.startAnimation(animation);
         postStatus = 1;
     }
-
+    private int seccion;
     /**
      * Método utilizado para mover hacia el centro la imagen el jugado 2
      * @param context
@@ -192,6 +197,7 @@ public class AnimatedCharapter {
             @Override
             public void onAnimationEnd(Animation animation) {
                 postStatus = 0;
+                seccion++;
             }
 
             @Override
@@ -212,27 +218,28 @@ public class AnimatedCharapter {
      * @param tvJP1
      */
     public void moveCenterToLeft(Context context, ImageView imgJP1, ImageView imgChrJP1, TextView tvJP1){
-        imgJP1.setRotationY(-180);
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.moveoutjp1);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                postStatus = 0;
-                imgJP1.setRotationY(0);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        imgJP1.startAnimation(animation);
-        imgChrJP1.startAnimation(animation);
-        tvJP1.startAnimation(animation);
-        postStatus = 1;
+        if (seccion >= 2){
+            imgJP1.setRotationY(-180);
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.moveoutjp1);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    postStatus = 0;
+                    imgJP1.setRotationY(0);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+            imgJP1.startAnimation(animation);
+            imgChrJP1.startAnimation(animation);
+            tvJP1.startAnimation(animation);
+            postStatus = 1;
+            seccion--;
+        }
     }
     /**
      * Método utilizado para mover hacia afuera la imagen el jugado 2
@@ -242,25 +249,25 @@ public class AnimatedCharapter {
      * @param tvJP2
      */
     public void moveCenterToRight(Context context, ImageView imgJP2, ImageView imgChrJP2, TextView tvJP2){
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.moveoutjp2);
-        imgJP2.setRotationY(0);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                postStatus = 0;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        imgJP2.startAnimation(animation);
-        imgChrJP2.startAnimation(animation);
-        tvJP2.startAnimation(animation);
-        postStatus = 1;
+        if (seccion >= 2){
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.moveoutjp2);
+            imgJP2.setRotationY(0);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    postStatus = 0;
+                    imgJP2.setRotationY(-180);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+            imgJP2.startAnimation(animation);
+            imgChrJP2.startAnimation(animation);
+            tvJP2.startAnimation(animation);
+            postStatus = 1;
+            seccion--;
+        }
     }
 }

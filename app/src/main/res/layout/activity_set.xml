@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:visibility="visible"
     tools:context=".controlers.SetActivity">
 
@@ -92,7 +93,7 @@
         app:srcCompat="@drawable/chrrandom" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tvRnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post Bracket | Set n de 3"
@@ -168,6 +169,28 @@
         app:layout_constraintTop_toTopOf="@+id/guideline"
         app:layout_constraintVertical_bias="0.32999998" />
 
+    <View
+        android:id="@+id/view4"
+        android:layout_width="139dp"
+        android:layout_height="16dp"
+        android:background="#2FFF00"
+        app:layout_constraintBottom_toBottomOf="@+id/pbPlayer1"
+        app:layout_constraintEnd_toEndOf="@+id/pbPlayer1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/pbPlayer1"
+        app:layout_constraintTop_toTopOf="@+id/pbPlayer1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="142dp"
+        android:layout_height="16dp"
+        android:background="#2FFE00"
+        app:layout_constraintBottom_toBottomOf="@+id/pbPlayer2"
+        app:layout_constraintEnd_toEndOf="@+id/pbPlayer2"
+        app:layout_constraintStart_toStartOf="@+id/pbPlayer2"
+        app:layout_constraintTop_toTopOf="@+id/pbPlayer2" />
+
     <TextView
         android:id="@+id/ttlScene"
         android:layout_width="wrap_content"
@@ -195,7 +218,7 @@
     <ProgressBar
         android:id="@+id/pbPlayer1"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="162dp"
+        android:layout_width="140dp"
         android:layout_height="17dp"
         android:max="100"
         android:progress="100"
@@ -211,7 +234,7 @@
     <ProgressBar
         android:id="@+id/pbPlayer2"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="162dp"
+        android:layout_width="140dp"
         android:layout_height="17dp"
         android:max="100"
         android:progress="100"
