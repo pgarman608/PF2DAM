@@ -46,23 +46,27 @@ import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
-    private static final int REQUEST_IMAGE_PICK = 1;
-    private FirebaseAuth mAuth;
-
     private EditText edGMAIL;
     private EditText edPW;
     private Button btnRegister;
     private EditText edNick;
     private TextView tvTolog;
-    private Button btnSelectImage;
+
+    /**
+     * Aquí se configura la interfaz de usuario y se realizan las inicializaciones necesarias.
+     * Se establece el color de la barra de estado. Se obtiene una instancia de FirebaseAuth.
+     * Se obtienen las referencias a los elementos de la interfaz de usuario, como los EditText y los botones.
+     * Se establecen listeners de clic en el botón de registro y en el texto para ir al inicio de sesión.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         getWindow().setStatusBarColor(Color.parseColor("#000000"));
-
-        mAuth = FirebaseAuth.getInstance();
 
         edGMAIL = (EditText) findViewById(R.id.edtgmailR);
         edPW = (EditText) findViewById(R.id.edtPWR);
@@ -74,48 +78,58 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnRegister.setOnClickListener(this);
     }
 
+    /**
+     * Se verifica el ID de la vista que generó el evento y se realiza una acción correspondiente.
+     * Si se hace clic en el botón de registro, se llama al método "register" para realizar el registro.
+     * Luego se crea un intent para abrir la actividad MainActivity y se añade la bandera FLAG_ACTIVITY_CLEAR_TOP
+     * para limpiar la pila de actividades y evitar que se pueda volver atrás.
+     * Si se hace clic en el texto para ir al inicio de sesión, se crea un intent para abrir la actividad LoggingActivity.
+     * Finalmente, se inicia la actividad correspondiente y se finaliza la actividad actual.
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         Intent intentRegister = null;
         switch (v.getId()){
             case R.id.btnRegister:
-                register();
-                intentRegister = new Intent(RegisterActivity.this, MainActivity.class);
-                intentRegister.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                String email = edGMAIL.getText().toString().trim();
+                String password = edPW.getText().toString().trim();
+                String nick = edNick.getText().toString().trim();
+
+                // Validar las credenciales de inicio de sesión y el nick
+
+                if (TextUtils.isEmpty(nick)) {
+                    edNick.setError("Ingrese un nick para su cuenta");
+                }else{
+                    if (TextUtils.isEmpty(email)) {
+                        edGMAIL.setError("Ingrese su dirección de correo electrónico");
+                    }else{
+                        if (TextUtils.isEmpty(password)) {
+                            edPW.setError("Ingrese su contraseña");
+                        }else{
+                            if (password.length() < 6) {
+                                edPW.setError("La contraseña debe tener al menos 6 caracteres");
+                            }else{
+                                int sol = DataBaseJSON.createUser(nick,password,email);
+                                intentRegister = new Intent(RegisterActivity.this, MainActivity.class);
+                                intentRegister.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intentRegister);
+                                finish();
+                            }
+                        }
+                    }
+                }
                 break;
             case R.id.tvToLogin:
                 intentRegister = new Intent(RegisterActivity.this, LoggingActivity.class);
+                startActivity(intentRegister);
+                finish();
                 break;
         }
-        startActivity(intentRegister);
-        finish();
     }
-
-    private void register(){
-        String email = edGMAIL.getText().toString().trim();
-        String password = edPW.getText().toString().trim();
-        String nick = edNick.getText().toString().trim();
-
-        // Validar las credenciales de inicio de sesión y el nick
-        if (TextUtils.isEmpty(email)) {
-            edGMAIL.setError("Ingrese su dirección de correo electrónico");
-        }else{
-            if (TextUtils.isEmpty(password)) {
-                edPW.setError("Ingrese su contraseña");
-            }else{
-                if (password.length() < 6) {
-                    edPW.setError("La contraseña debe tener al menos 6 caracteres");
-                }else{
-                    if (TextUtils.isEmpty(nick)) {
-                        edNick.setError("Ingrese un nick para su cuenta");
-                    }else{
-                        int sol = DataBaseJSON.createUser(nick,password,email);
-
-                    }
-                }
-            }
-        }
-    }
+    /**
+     * Este metodo se usará para volver al MainActivity cuando creemos el usuario
+     */
     @Override
     public void onBackPressed() {
         finishAffinity();

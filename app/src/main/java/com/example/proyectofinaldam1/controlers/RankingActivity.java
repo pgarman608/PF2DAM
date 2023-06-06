@@ -18,6 +18,11 @@ public class RankingActivity extends AppCompatActivity implements View.OnClickLi
     private View vTierA;
     private View vTierB;
     private View vTierS;
+
+    /**
+     * Este método es parte de la clase RankingActivity que hereda de la clase AppCompatActivity y se ejecuta cuando se crea la actividad.
+     * @param savedInstanceState Objeto Bundle que contiene los datos previamente guardados del estado de la actividad.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,11 @@ public class RankingActivity extends AppCompatActivity implements View.OnClickLi
         vTierS.setOnClickListener(this);
     }
 
+    /**
+     * Este método se llama cuando se hace clic en un elemento de la vista.
+     * Se utiliza para pasar información de un Activity a otro usando un Intent.
+     * @param v la vista que ha sido clickeada
+     */
     @Override
     public void onClick(View v) {
         Intent intentRnk = new Intent(RankingActivity.this,RankingListActivity.class);

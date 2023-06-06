@@ -67,4 +67,15 @@ public class Usuario {
     public void setNick(String nick) {
         this.nick = nick;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "uid='" + uid + '\'' +
+                ", nick='" + nick + '\'' +
+                ", points=" + points +
+                ", games=" + games +
+                ", idTournament=" + idTournament +
+                '}';
+    }
 }
