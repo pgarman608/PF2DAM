@@ -620,7 +620,6 @@ public class SetActivity extends AppCompatActivity {
         tvPointJP1.setText(""+point1);
         tvPointJP2.setText(""+point2);
     }
-
     /**
      * Muestra el resultado de la partida y realiza las acciones correspondientes al finalizar el juego.
      */
@@ -630,9 +629,57 @@ public class SetActivity extends AppCompatActivity {
         if (setGame.getEnd() == 1){
             tvActualizar.setBackgroundColor(Color.rgb(0, 102, 255));
             aux = setGame.getUid_j1().getNick();
+            //Actualizamos el punto del ganador JP1
+            DataBaseJSON.getUsuario(setGame.getUid_j1().getUid(), new DataBaseJSON.UsuarioCallback() {
+                @Override
+                public void onUsuarioObtenido(Usuario usuario) {
+                    usuario.setPoints(usuario.getPoints() + 10);
+                    DataBaseJSON.setUsuario(usuario);
+                }
+                @Override
+                public void onUsersObtenido(List<Usuario> users) {}
+                @Override
+                public void onTrnsObtenido(List<Torneo> torneos) {}
+            });
+            //Actualizamos el punto del perdedor JP2
+            DataBaseJSON.getUsuario(setGame.getUid_j2().getUid(), new DataBaseJSON.UsuarioCallback() {
+                @Override
+                public void onUsuarioObtenido(Usuario usuario) {
+                    usuario.setPoints(usuario.getPoints() - 10);
+                    DataBaseJSON.setUsuario(usuario);
+                }
+                @Override
+                public void onUsersObtenido(List<Usuario> users) {}
+                @Override
+                public void onTrnsObtenido(List<Torneo> torneos) {}
+            });
         }else{
             tvActualizar.setBackgroundColor(Color.rgb(255, 0, 0));
             aux = setGame.getUid_j2().getNick();
+            //Actualizamos el punto del ganador JP2
+            DataBaseJSON.getUsuario(setGame.getUid_j1().getUid(), new DataBaseJSON.UsuarioCallback() {
+                @Override
+                public void onUsuarioObtenido(Usuario usuario) {
+                    usuario.setPoints(usuario.getPoints() - 10);
+                    DataBaseJSON.setUsuario(usuario);
+                }
+                @Override
+                public void onUsersObtenido(List<Usuario> users) {}
+                @Override
+                public void onTrnsObtenido(List<Torneo> torneos) {}
+            });
+            //Actualizamos el punto del perdedor JP1
+            DataBaseJSON.getUsuario(setGame.getUid_j2().getUid(), new DataBaseJSON.UsuarioCallback() {
+                @Override
+                public void onUsuarioObtenido(Usuario usuario) {
+                    usuario.setPoints(usuario.getPoints() + 10);
+                    DataBaseJSON.setUsuario(usuario);
+                }
+                @Override
+                public void onUsersObtenido(List<Usuario> users) {}
+                @Override
+                public void onTrnsObtenido(List<Torneo> torneos) {}
+            });
         }
         // Mostrar el mensaje de resultado de la partida
         tvActualizar.setText("Partida Terminada: Ganador " + aux);

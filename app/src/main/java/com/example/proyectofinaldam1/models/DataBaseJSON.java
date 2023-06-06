@@ -210,6 +210,28 @@ public class DataBaseJSON {
         }
         return solucion;
     }
+    public static int setUsuario(Usuario user){
+        solucion = 0;
+        try{
+            dbFirebase.getReference("Usuarios")
+                    .child(""+user.getUid())
+                    .setValue(user)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            solucion = 1;
+                        }
+                    }).addOnCanceledListener(new OnCanceledListener() {
+                        @Override
+                        public void onCanceled() {
+                            solucion = -1;
+                        }
+                    });
+        }catch (Exception ex){
+            solucion = -2;
+        }
+        return solucion;
+    }
     public static void setSet(Set set){
         DatabaseReference refJP1Enter = dbFirebase.getReference("Sets")
                 .child(""+set.getUid());
