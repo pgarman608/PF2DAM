@@ -125,7 +125,6 @@
         android:id="@+id/tvMJP"
         android:layout_width="141dp"
         android:layout_height="34dp"
-        android:layout_marginTop="84dp"
         android:text="TextView"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -133,8 +132,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPointTrn"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintVertical_bias="0" />
 
     <TextView
         android:id="@+id/textView13"
@@ -153,15 +152,14 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="117dp"
         android:text="Maximo de Jugadores"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvMJP"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.74"
         app:layout_constraintStart_toEndOf="@+id/textView13"
         app:layout_constraintTop_toBottomOf="@+id/tvPointTrn"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.225" />
 
     <TextView
         android:id="@+id/textView11"
